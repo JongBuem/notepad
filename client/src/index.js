@@ -4,11 +4,35 @@ import './index.css';
 import App from './App';
 // import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom'
+import {Provider} from 'react-redux'
+import {createStore} from 'redux'
+
+//초기 값 지정
+const age = 26
+//state값을 보내는 방법 Action
+function reducer(state = age, action){
+  if(action.type === "plus"){
+    state++;
+    return state
+  }
+  else if(action.type === "minus"){
+    state--;
+    return state
+  }
+  else {
+    
+    return state
+  }
+}
+
+let store = createStore(reducer)
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+    <Provider store={store}>
     <App />
+    </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

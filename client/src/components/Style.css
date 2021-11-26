@@ -1,0 +1,22 @@
+  :root{
+    --textcolor : black;
+    --paddingsmall : 10px 
+}
+
+.TopMenuComponent{
+    display: flex;
+    justify-items: center;
+    justify-content: space-around;
+    background-color: #282c34;
+    padding: var(--paddingsmall);
+} 
+
+a{
+    text-decoration: none;
+    color: var(--textcolor);
+}
+
+a:hover{
+    /* position:relative */
+    color: plum;
+} 

@@ -1,23 +1,13 @@
 import React from 'react';
-import {Route, Routes } from "react-router-dom";
-import About from './About';
 import './App.css';
-import Header from './component/Header';
+import TopMenuRouter from './routers/TopMenuRouter'
+import TopMenuComponent from './components/TopMenuComponent';
 
-
-function App() {
+export default function Menu() {
   return (
-    <div className='App'>
-      <Header />
-      <Routes> 
-        <Route path={"/main"} element={<About/>} />
-        <Route path={"/main"} element={<About/>} />
-      </Routes> 
+    <div className="App">
+      <TopMenuComponent/>
+      <TopMenuRouter/>
     </div>
-
-
-  
   );
 }
-
-export default App;
