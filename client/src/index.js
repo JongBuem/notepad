@@ -7,34 +7,37 @@ import {BrowserRouter} from 'react-router-dom'
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
 
-//초기 값 지정
-const age = 26
+
+//Login 초기 값 지정
+const obj={
+  "login" : false,
+  "id" : ''
+} 
+  
 //state값을 보내는 방법 Action
-function reducer(state = age, action){
-  if(action.type === "plus"){
-    state++;
+function reducer(state = obj, action){
+  if(action.type === "open"){
+    state = true
     return state
   }
-  else if(action.type === "minus"){
-    state--;
+  else if(action.type === "close"){
+    state = false
     return state
   }
   else {
-    
-    return state
+    return state.login
   }
 }
-
 let store = createStore(reducer)
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
+  // <React.StrictMode>
     <Provider store={store}>
+    <BrowserRouter>
     <App />
-    </Provider>
     </BrowserRouter>
-  </React.StrictMode>,
+    </Provider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

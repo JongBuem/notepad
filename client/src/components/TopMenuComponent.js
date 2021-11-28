@@ -2,16 +2,17 @@ import * as React  from 'react';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import './Style.css'
-import {Box, Toolbar, MenuItem  , AppBar, IconButton, Button, ButtonGroup, Select, InputLabel, FormControl, makeStyles, styled, alpha, InputBase, border } from '@material-ui/core';
+import Login from '../pages/Login';
+import {Box, Toolbar, MenuItem  , AppBar, IconButton, Button, ButtonGroup, Select, InputLabel, FormControl, makeStyles, styled, alpha, InputBase,} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import HomeIcon from '@material-ui/icons/Home';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-// import {Icon} from '@mui/icons-material';
-// import AppBar from '@material/top-app-bar';
+import { useDispatch } from 'react-redux';
 
-//검색창 상자
+
+//검색창 상자 style
 const Search = styled('div')(({ theme }) => ({
     display: 'flex',
     position: 'relative',
@@ -20,20 +21,14 @@ const Search = styled('div')(({ theme }) => ({
     '&:hover': {
         backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
-    // marginRight: theme.spacing(2),
-    // marginLeft: 0,
     width: '50%',
     height: '50%',
     alignItems:"center",
     padding:'5px',
     paddingLeft:'15px',
-    // [theme.breakpoints.up('sm')]: {
-    //   marginLeft: theme.spacing(3),
-    //   width: 'auto',
-    // },
 }));
 
-//검색창 돋보기 icon 상자
+//검색창 돋보기 style
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     // padding: theme.spacing(0, 2),
     height: '100%',
@@ -51,13 +46,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function TopMenuComponent() {
-    const [age, setAge] = useState('');
+    const dispatch = useDispatch() //로그인 리듀서
     
+    const [age, setAge] = useState('');
     const handleChange = (event) => {
         setAge(event.target.value);
         console.log(age)
     };
-    
     const useStyles = makeStyles({
         select: {
             "&:after": {
@@ -75,15 +70,6 @@ export default function TopMenuComponent() {
                 borderColor: "#ffff",
             },
         },
-        icon: {
-            fill: 'white',
-        },
-        root: {
-            color: 'white',
-        },
-                    whiteColor: {
-                color: "#ffff"
-            }
     });
     const classes = useStyles();
     
@@ -142,11 +128,14 @@ export default function TopMenuComponent() {
                     </Box>
                     <Box>
                         <ButtonGroup>
-                            <Button style={{border:'none'}}><Link to="/" style={{display:"flex", color:"#ffff"}}><HomeIcon/></Link></Button>
+                            <Button style={{border:'none'}}> <Link to="/" style={{display:"flex", color:"#ffff"}}> <HomeIcon/></Link></Button>
                             <Button style={{border:'none'}}><Link to="/Chart" style={{display:"flex", color:"#ffff"}}><BarChartIcon/></Link></Button>
-                            <Button style={{border:'none'}}><Link to="/Login" style={{display:"flex", color:"#ffff"}}><AccountCircleIcon/></Link></Button>
+                            <Button style={{border:'none'}} onClick={()=> {dispatch({type:"open"})} }><AccountCircleIcon style={{display:"flex", color:"#ffff"}}/></Button>
+                            {/* <Button style={{border:'none'}}><Link to="/Login" style={{display:"flex", color:"#ffff"}}><AccountCircleIcon/></Link></Button> */}
                         </ButtonGroup>
                     </Box>
+                            <Login></Login>
+                    
                 </Toolbar>
             </AppBar>
         </Box>

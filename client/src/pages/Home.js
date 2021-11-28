@@ -9,29 +9,29 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export const data = {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
     datasets: [
-      {
-        // label: '# of Votes',
+        {
+        label: '# of Votes',
         data: [12, 19, 3, 5, 2, 3],
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
         ],
         borderWidth: 1,
-      },
+        },
     ],
-  };
+};
 
 const steps = [
     '요청',
@@ -66,7 +66,7 @@ const noticearry =  [
 function Notice({item}){
     return(
         <Box style={{display:"flex", justifyItems:"center", flexDirection:"column", justifyContent:"center", textAlign:"center", width:"70px"}}>
-        <Box marginBottom={1} style={{fontWeight:"600", fontSize:"20px", color: item.color, fontWeight:"600"}}>{item.value}</Box>
+        <Box marginBottom={1} style={{fontSize:"20px", color: item.color, fontWeight:"600"}}>{item.value}</Box>
         <Box style={{height:"14px", backgroundColor: item.color, marginBottom:"1px"}}></Box>
         <Box style={{height:"14px", backgroundColor: item.color, marginBottom:"1px"}}></Box>
         <Box style={{height:"14px", backgroundColor: item.color, marginBottom:"1px"}}></Box>
@@ -140,18 +140,7 @@ function LoginHistoryLists(item){
     )
 }
 
-export default function Home({text}) {
-    // const dispatch = useDispatch()
-    
-    // const age = useSelector((state)=>state)
-    // const plus=()=>{
-    //     dispatch({type:'plus'})
-    // }
-
-    // const minus=()=>{
-    //     dispatch({type:"minus"})
-    // }
-
+export default function Home() {
     return (
         <Box sx={{p:3, bgcolor:"#DDDDDD", position:'static',height:"100%"}} className="Home">
             <Box sx={{flexGrow:1,mb:1, display:'flex', flexDirection:"row", height:"20%"}}>
@@ -178,7 +167,7 @@ export default function Home({text}) {
                     <Box sx={{p:2,mb:1, bgcolor:"#ffff"}}>
                         <Grid container spacing={2}>
                             <Grid item md={12}>
-                            <Typography style={{ fontWeight:"600"}}  variant="h7" component="div">
+                            <Typography style={{ fontWeight:"600"}}  variant="h6" component="div">
                                 Performance
                             </Typography>
                                 <List>
@@ -197,7 +186,7 @@ export default function Home({text}) {
                     <Box sx={{flexGrow:1, bgcolor:"#ffff"}} style={{overflowY:"scroll", overflowX:"hidden"}}>
                         <Grid container spacing={0}>
                             <Grid item md={12}>
-                                <Typography style={{margin:"15px 15px 1px 15px", fontWeight:"700"}} variant="h7" component="div">
+                                <Typography style={{margin:"15px 15px 1px 15px", fontWeight:"700"}} variant="h6" component="div">
                                     Login History
                                 </Typography>
                                 <Grid container spacing={0} style={{margin:"15px 0px 0px 15px"}}>
@@ -229,46 +218,48 @@ export default function Home({text}) {
                 </Box>
                 <Box sx={{width:"100%", display:"flex", flexDirection:"column"}}>
                     <Box sx={{bgcolor:"#ffff", flexGrow:1, mb:1, p:2}}>
-                        <Typography sx={{flexGrow:1}} style={{fontWeight:"700"}} variant="h7" component="div">
+                        <Typography sx={{flexGrow:1}} style={{fontWeight:"700"}} variant="h6" component="div">
                             Advisor Recommendations
                         </Typography>
                         <Box style={{ height:"100%", display:"flex", alignItems:"center"}}>
                             <Grid item md={12}>
                                 <Grid container spacing={0}>
-                                    <Grid md={6}>
+                                    <Grid item md={6}>
                                         <Grid container spacing={0}>
-                                            <Grid md={3}>
+                                            <Grid item md={3}>
                                                 <table border="1" bordercolor="blue" width="70px" height="70px">
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
+                                                    <tbody>
+                                                        <tr> 
+                                                            <td/> 
+                                                            <td/> 
+                                                            <td/>
+                                                        </tr>
+                                                        <tr>
+                                                            <td/> 
+                                                            <td/> 
+                                                            <td/>
+                                                        </tr>
+                                                        <tr>
+                                                            <td/> 
+                                                            <td/> 
+                                                            <td/>
+                                                        </tr>
+                                                    </tbody>
                                                 </table>
                                             </Grid>
-                                            <Grid md={4}>
-                                                <Typography style={{fontSize:"13px", fontWeight:"600", textShadow:"1px 1px #F2F2F2", marginBottom:"10px"}} variant="h7" component="div">
+                                            <Grid item md={4}>
+                                                <Typography style={{fontSize:"13px", fontWeight:"600", textShadow:"1px 1px #F2F2F2", marginBottom:"10px"}} variant="h6" component="div">
                                                     모든 권장사항
                                                 </Typography>
                                                 <Typography variant="h3" component="div">
                                                     0
                                                 </Typography>
                                             </Grid>
-                                            <Grid md={3}>
-                                                <Typography style={{fontSize:"13px", fontWeight:"600", textShadow:"1px 1px #F2F2F2", marginBottom:"20px"}} variant="h7" component="div">
+                                            <Grid item md={3}>
+                                                <Typography style={{fontSize:"13px", fontWeight:"600", textShadow:"1px 1px #F2F2F2", marginBottom:"15px"}} variant="h6" component="div">
                                                     영향도 분석
                                                 </Typography>
-                                                <Typography component="ui">
+                                                <Typography component="div">
                                                     <li><span>높은 역향</span> <span>0</span></li>
                                                     <li><span>중간 역향</span> <span>0</span></li>
                                                     <li><span>낮은 역향</span> <span>0</span></li>
@@ -276,18 +267,18 @@ export default function Home({text}) {
                                             </Grid>
                                         </Grid>
                                     </Grid>
-                                    <Grid md={6}>
+                                    <Grid item md={6}>
                                         <Grid container spacing={0}>
-                                            <Grid md={4}>
-                                                <Typography style={{fontSize:"13px", fontWeight:"600", textShadow:"1px 1px #F2F2F2", marginBottom:"10px"}} variant="h7" component="div">
-                                                    영향박는 리소스
+                                            <Grid item md={4}>
+                                                <Typography style={{fontSize:"13px", fontWeight:"600", textShadow:"1px 1px #F2F2F2", marginBottom:"10px"}} variant="h6" component="div">
+                                                    영향받는 리소스
                                                 </Typography>
                                                 <Typography variant="h3" component="div">
                                                     0
                                                 </Typography>
                                             </Grid>
-                                            <Grid md={6}>
-                                                <Typography style={{fontSize:"13px", fontWeight:"600", textShadow:"1px 1px #F2F2F2", marginBottom:"10px"}} variant="h7" component="div">
+                                            <Grid item md={6}>
+                                                <Typography style={{fontSize:"13px", fontWeight:"600", textShadow:"1px 1px #F2F2F2", marginBottom:"10px"}} variant="h6" component="div">
                                                     절약 가능한 금액/년간
                                                 </Typography>
                                                 <Typography variant="h3" component="div">
@@ -302,7 +293,7 @@ export default function Home({text}) {
                     </Box>
                     <Box sx={{flexGrow:2, display:"flex"}}>
                         <Box sx={{flexGrow:1, mr:1, bgcolor:"#ffff",p:2}}>
-                            <Typography sx={{flexGrow:1}} style={{fontWeight:"700"}} variant="h7" component="div">
+                            <Typography sx={{flexGrow:1}} style={{fontWeight:"700"}} variant="h6" component="div">
                                 알림정보
                             </Typography>
                             <Box style={{display:"flex", justifyContent:"space-around"}}>
@@ -317,7 +308,7 @@ export default function Home({text}) {
                             </Box>
                         </Box>
                         <Box sx={{flexGrow:1, bgcolor:"#ffff", p:2}} style={{display:"flex",flexDirection:"column" }}>
-                            <Typography sx={{flexGrow:1}} style={{fontWeight:"700"}} variant="h7" component="div">
+                            <Typography sx={{flexGrow:1}} style={{fontWeight:"700"}} variant="h6" component="div">
                                 디스크 정보
                             </Typography>
                             <Box style={{display:"flex", justifyContent:"center"}}>
