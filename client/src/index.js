@@ -4,39 +4,38 @@ import './index.css';
 import App from './App';
 // import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom'
-import {Provider} from 'react-redux'
-import {createStore} from 'redux'
 
 
-//Login 초기 값 지정
-const obj={
-  "login" : false,
-  "id" : ''
-} 
-  
-//state값을 보내는 방법 Action
-function reducer(state = obj, action){
-  if(action.type === "open"){
-    state = true
-    return state
-  }
-  else if(action.type === "close"){
-    state = false
-    return state
-  }
-  else {
-    return state.login
-  }
-}
-let store = createStore(reducer)
+// import {Provider} from 'react-redux'
+// import {createStore} from 'redux'
+// //Login 초기 값 지정
+// const obj={
+//   "login" : false,
+//   "id" : ''
+// } 
+// //state값을 보내는 방법 Action
+// function reducer(state = obj, action){
+//   if(action.type === "open"){
+//     state = true
+//     return state
+//   }
+//   else if(action.type === "close"){
+//     state = false
+//     return state
+//   }
+//   else {
+//     return state.login
+//   }
+// }
+// let store = createStore(reducer)
 
 ReactDOM.render(
   // <React.StrictMode>
-    <Provider store={store}>
+    // <Provider store={store}>
     <BrowserRouter>
-    <App />
-    </BrowserRouter>
-    </Provider>,
+      <App />
+    </BrowserRouter>,
+    // </Provider>,
   // </React.StrictMode>,
   document.getElementById('root')
 );

@@ -3,9 +3,13 @@ const express = require("express");
 const router = express.Router(); 
 
 router.post('/',(req, res)=>{
-    const item = req.body.item;
-    console.log(item)
-    
+    const id = req.body.id;
+    const password = req.body.password;
+    console.log(id, password)
+    res.json({message:true})
+
+
+
 });
 
 // 라우터를 모듈화

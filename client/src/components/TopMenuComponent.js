@@ -9,7 +9,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import HomeIcon from '@material-ui/icons/Home';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect, useSelector } from 'react-redux';
+
+import {loginOpen, loginClose} from '../redux/loginwindow/actions'
 
 
 //검색창 상자 style
@@ -45,9 +47,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     width:"80%"
 }));
 
-export default function TopMenuComponent() {
+
+
+
+function TopMenuComponent() {
     const dispatch = useDispatch() //로그인 리듀서
-    
+    const {loginWindow} = useSelector((state)=>state)
+
     const [age, setAge] = useState('');
     const handleChange = (event) => {
         setAge(event.target.value);
@@ -74,7 +80,6 @@ export default function TopMenuComponent() {
     const classes = useStyles();
     
     return (
-
         <Box sx={{ display:'flex', bgcolor:'text.disabled'}}>
             <AppBar position="static" style={{backgroundColor:'#5E2F78'}}>
                 <Toolbar sx={{display:'flex'}}>
@@ -130,7 +135,7 @@ export default function TopMenuComponent() {
                         <ButtonGroup>
                             <Button style={{border:'none'}}> <Link to="/" style={{display:"flex", color:"#ffff"}}> <HomeIcon/></Link></Button>
                             <Button style={{border:'none'}}><Link to="/Chart" style={{display:"flex", color:"#ffff"}}><BarChartIcon/></Link></Button>
-                            <Button style={{border:'none'}} onClick={()=> {dispatch({type:"open"})} }><AccountCircleIcon style={{display:"flex", color:"#ffff"}}/></Button>
+                            <Button style={{border:'none'}} onClick={()=>dispatch(loginOpen())}><AccountCircleIcon style={{display:"flex", color:"#ffff"}}/></Button>
                             {/* <Button style={{border:'none'}}><Link to="/Login" style={{display:"flex", color:"#ffff"}}><AccountCircleIcon/></Link></Button> */}
                         </ButtonGroup>
                     </Box>
@@ -142,3 +147,24 @@ export default function TopMenuComponent() {
 
     );
 }
+// const loginStateProps = (state) => {
+//     return{
+//         loginWindow : state.loginWindow
+//     }
+// }
+
+// const loginDispatchPropsOpen = (dispatch)=>{
+//     return{
+//         loginOpen: ()=>dispatch(loginOpen())
+//     }
+// }
+
+// const loginDispatchPropsClose = (dispatch)=>{
+//     return{
+//         loginClose: ()=>dispatch(loginClose())
+//     }
+// }
+
+// export default connect(loginStateProps, loginDispatchPropsOpen, loginDispatchPropsClose )(TopMenuComponent)
+
+export default TopMenuComponent
