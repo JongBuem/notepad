@@ -1,8 +1,5 @@
 .App {
-  width: 70%;
-  height: 95vh;
+  height: 100vh;
   margin: 0 auto;
-  margin-top: 20px;
-  border: 0.1px solid gray;
   overflow: hidden;
 }

@@ -1,6 +1,30 @@
 .Home{
     overflow: scroll;
+    height: 105vh;
+    margin: 0 auto;
+    background-color: "#DDDDDD";
+    position: static;
 }
+
+.Signup{
+  display: flex;
+  width:100%;
+  height:105vh;
+  background-color:#ffff;
+  margin:  0 auto;
+  flex-direction: column;
+}
+
+.News{
+  display: flex;
+  width:100%;
+  height:93vh;
+  background-color:#ffff;
+  margin:  0 auto;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
 
 ::-webkit-scrollbar {
     width: 7px;

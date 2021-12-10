@@ -2,6 +2,7 @@
   "name": "notepad",
   "version": "0.1.0",
   "private": true,
+  
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
@@ -12,7 +13,9 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.24.0",
     "chart.js": "^3.6.0",
+    "cheerio": "^1.0.0-rc.10",
     "faker": "^5.5.3",
+    "iconv-lite": "^0.6.3",
     "react": "^17.0.2",
     "react-chartjs-2": "^4.0.0",
     "react-dom": "^17.0.2",

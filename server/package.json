@@ -9,10 +9,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@azure/arm-analysisservices": "^3.0.0",
+    "@azure/arm-resources-subscriptions": "^1.0.1",
+    "@azure/identity": "^2.0.1",
+    "axios": "^0.24.0",
     "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.10",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongodb": "^4.1.4",
-    "nodemon": "^2.0.15"
+    "iconv-lite": "^0.6.3",
+    "mongodb": "^4.2.1",
+    "node-cron": "^3.0.0",
+    "nodemon": "^2.0.15",
+    "request": "^2.88.2"
   }
 }

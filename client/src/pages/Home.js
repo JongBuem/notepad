@@ -54,7 +54,8 @@ const LoginHistoryarry = [
     {id:1,name:"Demo",timestamp:"2019-11-26 00:00"},
     {id:2,name:"Demo",timestamp:"2019-11-26 00:00"},
     {id:3,name:"Demo",timestamp:"2019-11-26 00:00"},
-    {id:4,name:"Demo",timestamp:"2019-11-26 00:00"}
+    {id:4,name:"Demo",timestamp:"2019-11-26 00:00"},
+    {id:5,name:"Demo",timestamp:"2019-11-26 00:00"},
 ]
 
 const noticearry =  [
@@ -142,7 +143,7 @@ function LoginHistoryLists(item){
 
 export default function Home() {
     return (
-        <Box sx={{p:3, bgcolor:"#DDDDDD", position:'static',height:"100%"}} className="Home">
+        <Box sx={{p:2, bgcolor:"#DDDDDD"}} className="Home">
             <Box sx={{flexGrow:1,mb:1, display:'flex', flexDirection:"row", height:"20%"}}>
                 <Box sx={{display:"flex",flexGrow:1, mr:1, flexDirection:'row'}}>
                     <Box sx={{py:2 ,px:2,width:"100%", color:"#ffff"}} bgcolor="#5E2F78">demo</Box>
@@ -162,7 +163,7 @@ export default function Home() {
                 </Box>
             </Box>
             
-            <Box sx={{flexGrow:1, color:"#71675F", height:"65%",display:'flex'}}>
+            <Box sx={{flexGrow:1, color:"#71675F", height:"66%",display:'flex'}}>
                 <Box sx={{display:"flex",flexDirection:"column",width:"30%", mr:1}}>
                     <Box sx={{p:2,mb:1, bgcolor:"#ffff"}}>
                         <Grid container spacing={2}>

@@ -21,23 +21,19 @@ import {loginOpen, loginClose} from '../redux/loginwindow/actions'
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+    const {  value, index,  ...other } = props;
     return (
-        <div
+        <Box 
             role="tabpanel"
             hidden={value !== index}
             id={`full-width-tabpanel-${index}`}
             aria-labelledby={`full-width-tab-${index}`}
             {...other}
-        >
-            {value === index && (
-            <Box sx={{p:3}}>
-                <Typography>{children}</Typography>
-            </Box>
-            )}
-        </div>
+            sx={{p:3}}>
+        </Box>
     );
 }
 
@@ -141,19 +137,19 @@ export default function Login() {
                         onChangeIndex={handleChangeIndex}
                     >
                         <TabPanel value={value} index={0} dir={theme.direction}>
-                            <DialogContent style={{width:"300px", padding:"0px 30px 10px 30px"}}>
+                            <DialogContent style={{ padding:"0px 30px 10px 30px"}}>
                                 <TextField 
                                     label="ID" 
                                     value={values.id}
                                     onChange={handleChange('id')}
+                                    style={{width: "250px",}}
                                 />
-                            </DialogContent>
-                            <DialogContent style={{width:"200px", padding:"0px 30px 20px 30px"}}> 
                                 <TextField
                                     label="Password"
                                     type={values.showPassword ? 'text' : 'password'}
                                     value={values.password}
                                     onChange={handleChange('password')}
+                                    style={{width: "250px",}}
                                     InputProps={{
                                         endAdornment:(
                                         <InputAdornment position="end">
@@ -169,7 +165,7 @@ export default function Login() {
                                 />
                             </DialogContent>
                             <DialogActions>
-                                <Button  onClick={()=> dispatch(loginClose()) } color="primary"> 회원가입 </Button>
+                                <Link to="/singup"><Button  onClick={()=> dispatch(loginClose()) } color="primary"> 회원가입</Button></Link>
                                 <Button  onClick={()=> loginButton() } color="primary" autoFocus> 로그인</Button>
                             </DialogActions>
                         </TabPanel>
