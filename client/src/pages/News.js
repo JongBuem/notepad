@@ -21,22 +21,37 @@ const Lists = (props)=>{
 
 export default function News(){
     const {news} = useSelector((state)=>state)
-    // const [state, setState]= useState(false);
+    const [state, setState] =useState(false)
 
-    // useEffect(()=>{
-    //     setState(true)
-    // },[news.naver!=0])
-
-    let naver = news.naver
-    let daum = news.daum
+    var interval = setInterval(()=> {
+        if (news.naver != undefined && news.kakao != undefined) {
+        clearInterval(interval) 
+        
+        setState(true)
+          // dispatch(addstate())
+        }
+        console.log(news)
+    }, 1000)
 
     return(
         <Box className="News" sx={{p:3}}>
-            <CircularProgress/>
-            Naver
-            <br/>
-            {
-                naver.map(item=>(
+            {state==false?<CircularProgress/>:
+            <Box>
+            
+                <Box>
+                {
+                news.naver.map(item=>(
+                    <Lists
+                        key={item.titleinfo}
+                        title={item.title}
+                        titleinfo={item.titleinfo}
+                    />
+                ))
+                }
+                </Box>
+            
+            {/* {
+                kakao.map(item=>(
                 <Lists
                     key={item.titleinfo}
                     title={item.title}
@@ -44,26 +59,19 @@ export default function News(){
                 />
                 ))
             }
-            Daum
-            <br/>
                         {
-                daum.map(item=>(
+                kakao.map(item=>(
                 <Lists
                     key={item.titleinfo}
                     title={item.title}
                     titleinfo={item.titleinfo}
                 />
                 ))
-            }
-                        ssdsd
-                        {
-                daum.map(item=>(
-                <Lists
-                    key={item.titleinfo}
-                    title={item.title}
-                    titleinfo={item.titleinfo}
-                />
-                ))
+            } */}
+
+            </Box>
+
+
             }
         </Box>
     )

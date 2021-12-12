@@ -4,7 +4,6 @@ const router = express.Router();
 const axios = require("axios")
 const cheerio = require("cheerio");
 const iconv = require("iconv-lite")
-const urlType = require("url") 
 const apikey = "KakaoAK 82fd5692834ed6b3e7f6dd4236f4228a"
 
 const htmlget = async (url) => {
@@ -16,7 +15,7 @@ const htmlget = async (url) => {
             let domElement = $("img")
             // .first("img")
             domElement.each(function(i, ele) {
-                if(i==4){
+                if(i==6){
                     if($(this).attr('src').indexOf("//") < 0 ){
                         let com = url.indexOf(".com")
                         let kr = url.indexOf(".kr")
@@ -38,18 +37,15 @@ const htmlget = async (url) => {
                     }
                 }
             });
-            return result[4].src
-            // return result[0].src
+            return result[6].src
     } catch{
-        console.log("error");
+        console.log("kakao news failed to load image");
+        return null
     }
 }
 
-
-
 router.post('/', async(request, response)=>{
     const serch = request.body.serch
-    console.log(serch)
     await axios.get("https://dapi.kakao.com/v2/search/web?sort=recency&page=1&size=50&query="+encodeURI(serch),{
         headers:{
             "Content-Type": "application/json",
@@ -57,27 +53,31 @@ router.post('/', async(request, response)=>{
         }
     }).then(async(res)=>{
         if(res.data){
-            const item = res.data.documents
             let result=[]
+            const item = await res.data.documents
             for(let i=0; i<item.length; i++){
                 let url = await item[i].url
-                let newkeyword = url.indexOf("news")
+                let newkeyword = await url.indexOf("news")
                 if(newkeyword >0){
-                    result[i] = {
+                    result.push({
                         "title" : await item[i].title.replaceAll("<b>","").replaceAll("</b>",""),
                         "info" : await item[i].contents.replaceAll("<b>","").replaceAll("</b>",""),
                         "url" : await item[i].url,
                         "date" : await item[i].datetime,
                         "imgurl" : await htmlget(url)
-                    }
+                    })
                 }
             }
-            console.log(result)
+            // console.log(result)
+            // console.log(result.length)
+            response.json({message:result})
         }else{
-            console.log("false")
+            response.json({message:false})
         }
     }).catch((error)=> {
-        console.log(error)
+        response.json({message:false})
+        console.log("kakao Get API error")
+        // console.log(error)
     })
 });
 

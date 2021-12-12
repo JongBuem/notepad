@@ -237,8 +237,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 function TopMenuComponent() {
     const dispatch = useDispatch() //login window action
     const {drawer} = useSelector((state)=>state)
-    const {news} = useSelector((state)=>state)
-    console.log(news)
 
     const theme = useTheme();
     const [age, setAge] = useState('');
