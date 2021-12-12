@@ -68,5 +68,5 @@ export default function Chart(){
     // console.log(data)
     ChartJS.register(LineElement, PointElement, LinearScale, Title);
     // const age = useSelector((state)=>state)
-    return <Line style={{height:"inherit"}} options={options} data={data} />;
+    return <Line options={options} data={data} />;
 }

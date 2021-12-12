@@ -1,6 +1,6 @@
   :root{
     --textcolor : black;
-    --paddingsmall : 10px 
+    --paddingsmall : 10px;
 }
 
 .TopMenuComponent{
@@ -21,4 +21,16 @@ a:hover{
     color: plum;
 }
 
+.listBox{
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+
+.list{
+    background-color:#ffff;
+    padding: 20px;
+    margin-bottom: 40px;
+}
 

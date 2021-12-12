@@ -1,6 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 import { Link } from "react-router-dom";
-import './Style.css'
+import './style.css'
 import Login from '../pages/Login';
 import {
     Box,
@@ -56,7 +56,7 @@ const Lists_1 = (props)=>{
         url="/"
         icon = <HomeIcon style={{color:"#5E2F78"}}/>
     }else if(props.index==1){
-        url="/chart"
+        url="/news"
         icon = <CloudQueueIcon style={{color:"#5E2F78"}}/>
     }else if(props.index==2){
         url="/chart"

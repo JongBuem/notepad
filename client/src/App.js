@@ -13,21 +13,12 @@ export default function App() {
   const {news} = useSelector((state)=>state)
   const [state, setState] = useState(false)
 
-    // var interval = setInterval(()=> {
-    //   if (news.naver != undefined && news.kakao != undefined) {
-    //     clearInterval(interval) 
-    //     setState(true)
-    //     // dispatch(addstate())
-    //   }
-    //   console.log(news)
-    // }, 1000)
-
   return (
     // <Provider store={store}>
-      <div className="App">
+      <Box className="App">
         <TopMenuComponent/>
         {/* {state==false?<CircularProgress/>: <TopMenuComponent/>}  */}
-      </div>
+      </Box>
     // </Provider>
   );
 }
