@@ -98,7 +98,12 @@ const Lists = (props)=>{
     const [provider, setProvider] = useState(props.provider);
     const [logimg, setLogimg] = useState("");
     const {loginWindow} = useSelector((state)=>state)
+    const {news} = useSelector((state)=>state)
+    Promise.all([ news.recordfind]).then((values) => {
+        console.log(values[0])
 
+    })
+    
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -234,17 +239,6 @@ export default function NewsList({props}){
     const {loginWindow} = useSelector((state)=>state)
     const [heart, setHeart] = useState(false);
     const [heartstate, setHeartstate] =useState(false)
-
-    // if(typeof(news.recordfind)=="string"){
-    //     let interval = setInterval(()=> {
-    //         console.log(typeof(news.recordfind))
-    //         // if (news.naver != undefined) {
-    //         //     setArticle(news.naver)
-    //         //     clearInterval(interval) 
-    //         //     setState(true)
-    //         // }
-    //     }, 1000)
-    // }
 
 
     if(props=="naver"){

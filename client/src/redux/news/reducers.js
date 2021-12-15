@@ -1,5 +1,5 @@
 //reducers
-import { ADD_STATE , RECORD_FIND, ASYNC} from './types'
+import { ADD_STATE , RECORD_FIND, ASYNC, PRPMISE} from './types'
 import axios from 'axios'
 
 // 이부분이 Client -> Server 로 요청
@@ -15,7 +15,7 @@ const newsAPI= async(item, query, sort)=>{
         sort: sort
     }).then(async(res)=>{
         if(res.data.message){
-            if(item=="naver") return await res.data.message
+            if(item=="naver") initialState.naver = res.data.message
             else if(item=="kakao") initialState.kakao = res.data.message
             else if(item=="bing") initialState.bing = res.data.message
             else if(item=="guardian") initialState.guardian = res.data.message
@@ -30,14 +30,15 @@ const newsAPI= async(item, query, sort)=>{
 
 //초기 값
 let initialState = {
-    naver :  newsAPI("naver", "클라우드", "accuracy"),
+    naver :  undefined,
     kakao : undefined,
     bing : undefined,
     guardian : undefined,
     newscatcher : undefined,
     loading : false,
     recordfind : RECORD_FIND,
-    asyncs : ASYNC
+    asyncawait : ASYNC,
+    promise : PRPMISE
 }
 
 //recency  최신

@@ -13,14 +13,12 @@ export default function App() {
   const {news} = useSelector((state)=>state)
   const [state, setState] = useState(false)
   const {loginWindow} = useSelector((state)=>state)
-  console.log(news.recordfind, news.asyncs)
   
-
-
-    Promise.all([ news.asyncs]).then((values) => {
+  console.log(news.promise, news.asyncawait)
+  Promise.all([ news.promise, news.asyncawait]).then((values) => {
     console.log(values)
-    console.timeEnd()
-    console.log(news.asyncs)
+    console.log(news.promise, news.asyncawait)
+    // console.timeEnd()
   })
 
 

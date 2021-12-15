@@ -13,7 +13,6 @@ const connect_mongodb=(email, news, res)=>{
         const db = mongoClient.db(dbName);                                          //user collection 연결
         const collection = db.collection(collectionName);                           //user collection의 info table 연결
         const document = await collection.find({ "email": email }).toArray();
-        console.log("AS")
         res.json(document)
     })()
 }
