@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.60",
     "@material/top-app-bar": "^13.0.0",
     "@mui/icons-material": "^5.2.0",
     "@testing-library/jest-dom": "^5.15.0",
@@ -13,6 +14,7 @@
     "axios": "^0.24.0",
     "chart.js": "^3.6.0",
     "cheerio": "^1.0.0-rc.10",
+    "clsx": "^1.1.1",
     "faker": "^5.5.3",
     "iconv-lite": "^0.6.3",
     "react": "^17.0.2",

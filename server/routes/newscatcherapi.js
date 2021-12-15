@@ -4,11 +4,21 @@ const router = express.Router();
 const axios = require("axios")
 const apikey = "efOBYCVMU9p_kdortqeooz_Wr0WmkUPBXXryf4_Q5ro"
 
-router.post('/', async(request, response)=>{
-    const serch = request.body.serch
-    await axios.get("https://api.newscatcherapi.com/v2/search?sort_by=date&q="+encodeURI(serch),{
+router.get('/', async(request, response)=>{
+    const serch = request.query.serch
+    const sortStr = request.query.sort
+    let sort=''
+    //관련도순
+    if(sortStr=="accuracy"){
+        sort = "relevancy"
+    }
+    //최신순
+    else if(sortStr=="recency"){
+        sort = "date"
+    }else sort = "relevancy"
+    await axios.get(`https://api.newscatcherapi.com/v2/search?sort_by=${sort}&q=`+encodeURI(serch),{
         headers:{
-            // 'x-rapidapi-host': 'google-news.p.rapidapi.com',
+            'x-rapidapi-host': 'google-news.p.rapidapi.com',
             "x-api-key":apikey
         }
     }).then(async(res)=>{

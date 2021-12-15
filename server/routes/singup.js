@@ -7,50 +7,37 @@ const mongoClient  = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTop
 const dbName = "user";
 const collectionName = 'info'
 
-const connect_mongodb=(name, userId,userPassword,userPasswordConfirm,res)=>{
+const connect_mongodb=(userName, userEmail,userPassword,userNewskeywords,res)=>{
     (async()=>{
-            await mongoClient.connect();
-            const db = mongoClient.db(dbName);                                  //DB
-            const collection = db.collection(collectionName);                   //DB table
-            const document = await collection.find({"id":userId}).toArray();    //mongodb검색 결과
-            if(document[0]==undefined){
-                let obj ={
-                    "name" : name,
-                    "id" : userId,
-                    "password" : userPassword
+            await mongoClient.connect();                                                //mongo Database 연결
+            const db = mongoClient.db(dbName);                                          //user collection 연결
+            const collection = db.collection(collectionName);                           //user collection의 info table 연결
+            const documents = await collection.find({"email":userEmail}).toArray();      //info table에 동일한 email이 있는지 검색
+            if(documents[0]==undefined){
+                try{                
+                    let obj ={
+                    "name" : userName,
+                    "email" : userEmail,
+                    "password" : userPassword,
+                    "newskeyword" : userNewskeywords
+                    }
+                    await collection.insertOne(obj)
+                    res.json({message:true})
+                }catch{
+                    res.json({message:false})
                 }
-                await collection.insertOne(obj)
-                res.json({message:true})
             }else{
                 res.json({message:false})
             }
-            // if(document[0]){
-
-            // }
-
-            // try{
-            //     const id = await document[0].id             //검색된 id
-            //     const password = await document[0].password //검색된 password
-            //     //입력값과 검색값이 같은지 확인
-            //     if(id==userId&&password==userPassword){
-            //         res.json({message:true})
-            //     }else{
-            //         res.json({message:false})
-            //     }
-            // }catch{
-            //     res.json({message:false})
-            // }
         })()
 }
 
 router.post('/', (req, res)=>{
-    const name = req.body.name              //사용자이름
-    const userId = req.body.id              //사용자 입력 id
-    const userPassword = req.body.password  //사용자 입력 password
-    const userPasswordConfirm = req.body.password 
-
-    connect_mongodb(name, userId, userPassword, userPasswordConfirm, res)
-
+    const userName = req.body.name                  //사용자 이름
+    const userEmail = req.body.email                //사용자 이메일
+    const userPassword = req.body.password          //사용자 비밀번호
+    const userNewskeywords = req.body.newskeywords  //뉴스 키워드
+    connect_mongodb(userName, userEmail, userPassword,userNewskeywords,res)
 });
 
 // 라우터를 모듈화

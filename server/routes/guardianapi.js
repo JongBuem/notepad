@@ -50,14 +50,23 @@ const htmlinfoget = async (url) => {
     }
 }
 
-router.post('/', async(request, response)=>{
-    const serch = request.body.serch
-    await axios.get(`https://content.guardianapis.com/search?api-key=${apikey}&page-size=20&section=technology&order-by=newest&q=`+encodeURI(serch))
+router.get('/', async(request, response)=>{
+    const serch = request.query.serch
+    const sortStr = request.query.sort
+    let sort=''
+    //관련도순
+    if(sortStr=="accuracy"){
+        sort = "relevance"
+    }
+    //최신순
+    else if(sortStr=="recency"){
+        sort = "newest"
+    }else sort = "relevance"
+    await axios.get(`https://content.guardianapis.com/search?api-key=${apikey}&page-size=20&section=technology&order-by=${sort}&q=`+encodeURI(serch))
     .then(async(res)=>{
         if(res.data){
             let result=[]
             const item = res.data.response.results
-            console.log(item)
             for(let i=0; i<item.length; i++){
                 const title = await item[i].webTitle
                 const url =await item[i].webUrl

@@ -15,6 +15,8 @@ app.use(express.static(__dirname + "./routes"));     //라우터 하기위한 �
 
 const login = require("./routes/login");
 const singup = require("./routes/singup");
+const recordfind = require("./routes/recordfind");
+const record = require("./routes/record");
 const chart = require("./routes/chart");
 const naver = require("./routes/naver")
 const daum = require("./routes/daum")
@@ -26,13 +28,15 @@ const newscatcherapi = require("./routes/newscatcherapi")
 
 app.use('/login',login);                        //login 
 app.use('/singup',singup)                       //sing up
+app.use('/news/record',record)                  //news 기록
+app.use('/news/record/find',recordfind)         //news 기록
 app.use('/chart',chart);                        //upbit api로 분석 및 chart
 app.use('/naver/news/crawl',naver)              //naver news web crawling test
 app.use('/daum/news/crawl',daum)                //daum news web crawling test
 app.use('/naver/news',naverapi)                 //naver news API 10개   -> 한글로 안하면 img가 안옴
 app.use('/kakao/news',kakaoapi)                 //kakao news API 10 ~ 15개
 app.use('/bing/news',bingapi)                   //bing news API 50개
-app.use('/guardian/news',guardianapi)           //guardian news API 30개 -> 영어로 qury를 날려야함
+app.use('/guardian/news',guardianapi)           //guardian news API 20개 -> 영어로 qury를 날려야함
 app.use('/newscatcher/news',newscatcherapi)     //newschart news API 50개
 
 app.listen(8080,()=>{

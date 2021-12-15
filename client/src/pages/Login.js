@@ -11,17 +11,20 @@ import {
     AppBar,
     Tabs,
     Tab,
-    Typography,
+    FormControlLabel,
+    Checkbox,
     Box,
     useTheme 
 } from '@material-ui/core'
 import SwipeableViews from 'react-swipeable-views';
 import { useSelector, useDispatch, connect } from 'react-redux';
 import {loginOpen, loginClose} from '../redux/loginwindow/actions'
+import {Alert, Autocomplete } from '@material-ui/lab';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import axios from 'axios'
 import { Link } from 'react-router-dom';
+import {login} from '../redux/loginwindow/actions'
 
 function TabPanel(props) {
     const {  value, index,  ...other } = props;
@@ -45,16 +48,9 @@ function a11yProps(index) {
 }
 
 export default function Login() {
-    // const login = useSelector(state=>state);
-    // const dispatch = useDispatch()
     const theme = useTheme();
-
-
     const dispatch = useDispatch() //로그인 리듀서
     const {loginWindow} = useSelector((state)=>state.loginWindow) //로그인 창 유무
-    // const propss = useSelector((state)=>state)
-    // console.log(propss)
-
 
     //top tab
     const [value, setValue] = React.useState(0);
@@ -66,14 +62,16 @@ export default function Login() {
     };
 
 
-    //id, password, passwordicon
+    //email, password, passwordicon
     const [values, setValues] = React.useState({
-        id:'',
+        userid:'',
+        email:'',
         password: '',
         showPassword: false,
-        userid:''
+        alertState: 0,
+        autoLogin:false
     });
-    //입력창에 id, password 입력시 변경
+    //입력창에 email, password 입력시 변경
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
     };
@@ -87,30 +85,46 @@ export default function Login() {
 
     //로그인 버튼 클릭시
     const loginButton= async()=>{
-        await axios.post("http://127.0.0.1:8080/login",{
-            headers: {
-                "Access-Control-Allow-Credentials" : true,
-                "Access-Control-Allow-Origin" :"http://127.0.0.1:8080",
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                
-            },
-            id : values.id,
-            password : values.password
-        }).then((res)=>{
-            if(res.data.message){
-                dispatch(loginClose())
-                console.log("true")
-            }else{
-                console.log("false")
-            }
-        }).catch((error)=> {
-            console.log(error)
-        })
+        // window.sessionStorage.setItem('email',values.email); //세션 스토리지 생성 -> 창닫으면 제거
+        // window.localStorage.setItem('email',values.email); //로컬 스토리지 생성 -> 창닫아도 남는다!
+        if(values.email == '' || values.password=='' ){
+            setValues({ ...values, alertState: 1 });
+        }else{
+            await axios.post("http://127.0.0.1:8080/login",{
+                headers: {
+                    "Access-Control-Allow-Credentials" : true,
+                    "Access-Control-Allow-Origin" :"http://127.0.0.1:8080",
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                },
+                email : values.email,
+                password : values.password
+            }).then((res)=>{
+                if(res.data.message==true){
+                    if(values.autoLogin==false){
+                        window.sessionStorage.setItem('email',values.email); //세션 스토리지 생성 -> 창닫으면 제거
+                        setValues({ ...values, alertState: 4 });
+                        dispatch(login())
+                        dispatch(loginClose())
+                    }else if(values.autoLogin==true){
+                        window.localStorage.setItem('email',values.email); //세션 스토리지 생성 -> 창닫으면 제거
+                        setValues({ ...values, alertState: 4 });
+                        dispatch(login())
+                        dispatch(loginClose())
+                    }
+                }else if(res.data.message=="회원아님"){
+                    setValues({ ...values, alertState: 2 });
+                }else if(res.data.message=="비밀번호다름"){
+                    setValues({ ...values, alertState: 3 });
+                }
+            }).catch((error)=> {
+                console.log(error)
+            })
+        }
     }
 
     return(
-        <FormControl>
+        <FormControl >
             <Dialog
                 open={loginWindow}
                 onClose={()=> dispatch(loginClose())}
@@ -127,8 +141,8 @@ export default function Login() {
                             variant="fullWidth"
                             aria-label="full width tabs example"
                         >
-                            <Tab label="ID / Password" {...a11yProps(0)} />
-                            <Tab label="USER ID" {...a11yProps(1)} />
+                            <Tab label="로그인" {...a11yProps(0)} style={{fontSize:"20px"}}/>
+                            {/* <Tab label="USER ID" {...a11yProps(1)} /> */}
                         </Tabs>
                     </AppBar>
                     <SwipeableViews
@@ -136,16 +150,16 @@ export default function Login() {
                         index={value}
                         onChangeIndex={handleChangeIndex}
                     >
-                        <TabPanel value={value} index={0} dir={theme.direction}>
+                        <TabPanel value={value} index={0} dir={theme.direction} >
                             <DialogContent style={{ padding:"0px 30px 10px 30px"}}>
                                 <TextField 
-                                    label="ID" 
-                                    value={values.id}
-                                    onChange={handleChange('id')}
+                                    label="이메일" 
+                                    value={values.email}
+                                    onChange={handleChange('email')}
                                     style={{width: "250px",}}
                                 />
                                 <TextField
-                                    label="Password"
+                                    label="비밀번호"
                                     type={values.showPassword ? 'text' : 'password'}
                                     value={values.password}
                                     onChange={handleChange('password')}
@@ -164,12 +178,22 @@ export default function Login() {
                                     }}
                                 />
                             </DialogContent>
-                            <DialogActions>
-                                <Link to="/singup"><Button  onClick={()=> dispatch(loginClose()) } color="primary"> 회원가입</Button></Link>
-                                <Button  onClick={()=> loginButton() } color="primary" autoFocus> 로그인</Button>
-                            </DialogActions>
+                            <Box style={{marginTop:34}}>
+                                {values.alertState==1?<Alert variant="filled" severity="error" onClose={() => {setValues({...values, alertState : 0 })}}> 모든 정보를 입력해주세요!</Alert>:<span/>}
+                                {values.alertState==2?<Alert variant="filled" severity="warning" onClose={() => {setValues({...values, alertState : 0 })}}> 존재하지 않는 이메일 입니다!</Alert>:<span/>}
+                                {values.alertState==3?<Alert variant="filled" severity="warning" onClose={() => {setValues({...values, alertState : 0 })}}> 비밀번호를 다시 확인해주세요</Alert>:<span/>}
+                                {values.alertState==4?<Alert variant="filled" severity="success" onClose={() => {setValues({...values, alertState : 0 })}}> 환영합니다</Alert>:<span/>}
+                                <DialogActions>
+                                    <FormControlLabel control={<Checkbox name="checkedC" onChange={(e)=>{
+                                            if(e.target.checked==true) setValues({ ...values, autoLogin: true });
+                                            else if (e.target.checked==false) setValues({ ...values, autoLogin: false });
+                                        }}/>} label="자동 로그인" />
+                                    <Link to="/singup"><Button  onClick={()=> dispatch(loginClose()) } color="primary"> 회원가입</Button></Link>
+                                    <Button  onClick={()=> loginButton() } color="primary" autoFocus > 로그인</Button>
+                                </DialogActions>
+                            </Box>
                         </TabPanel>
-                        <TabPanel value={value} index={1} dir={theme.direction}>
+                        {/* <TabPanel value={value} index={1} dir={theme.direction}>
                             <DialogContent style={{width:"auto", padding:"0px 30px 10px 30px"}}>
                                 <TextField 
                                     label="USER ID" 
@@ -180,44 +204,10 @@ export default function Login() {
                                     <Button  onClick={()=> loginButton() } color="primary" autoFocus> 확인</Button>
                                 </DialogActions>
                             </DialogContent>
-                        </TabPanel>
+                        </TabPanel> */}
                     </SwipeableViews>
                 </div>
             </Dialog>
         </FormControl>
     );
 }
-
-// //connect를 통해 reducers의 state값을 컴포넌트에 props로 전달
-// const loginStateProps = (state) => {
-//     return{
-//         loginWindow : state.loginWindow
-//     }
-// }
-
-// // //action을 통해 state의 값을 바꾸고 컴포넌트에 props로 전잘
-// const loginDispatchPropsOpen = (dispatch)=>{
-//     return{
-//         loginOpen: ()=>dispatch(loginOpen())
-//     }
-// }
-
-// const loginDispatchPropsClose = (dispatch)=>{
-//     return{
-//         loginClose: ()=>dispatch(loginClose())
-//     }
-// }
-
-// // 오브젝트방식
-// const loginDispatchPropsOpen = {
-//     // loginOpen : loginOpen //es6에서는 key와 value가 같으면 생략이가능
-//     loginOpen
-// }
-
-// const loginDispatchPropsClose = {
-//     // loginOpen : loginOpen //es6에서는 key와 value가 같으면 생략이가능
-//     loginClose
-// }
-
-
-// export default connect(loginStateProps, loginDispatchPropsOpen, loginDispatchPropsClose )(Login)

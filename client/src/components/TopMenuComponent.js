@@ -237,7 +237,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 function TopMenuComponent() {
     const dispatch = useDispatch() //login window action
     const {drawer} = useSelector((state)=>state)
-
+    const {loginWindow} = useSelector((state)=>state)
     const theme = useTheme();
     const [age, setAge] = useState('');
     const handleChange = (event) => {
@@ -264,6 +264,12 @@ function TopMenuComponent() {
         },
     });
     const classes = useStyles();
+
+    const loginWindows = ()=>{
+        if(loginWindow.loginState == "LOGOUT"){
+            dispatch(loginOpen())
+        }
+    }
     
     return (
         <Box sx={{ display:'flex', bgcolor:'text.disabled'}}>
@@ -323,7 +329,7 @@ function TopMenuComponent() {
                     <Box>
                         <ButtonGroup>
                             <Button style={{border:'none'}}><Link to="/news" style={{display:"flex", color:"#ffff"}}><NotificationsActiveIcon/></Link></Button>
-                            <Button style={{border:'none'}} onClick={()=>dispatch(loginOpen())}><AccountCircleIcon style={{display:"flex", color:"#ffff"}}/></Button>
+                            <Button style={{border:'none'}} onClick={()=> loginWindows()}><AccountCircleIcon style={{display:"flex", color:"#ffff"}}/></Button>
                         </ButtonGroup>
                     </Box>
                     <Login></Login>

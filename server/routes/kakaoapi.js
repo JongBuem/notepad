@@ -44,9 +44,19 @@ const htmlget = async (url) => {
     }
 }
 
-router.post('/', async(request, response)=>{
-    const serch = request.body.serch
-    await axios.get("https://dapi.kakao.com/v2/search/web?sort=recency&page=1&size=50&query="+encodeURI(serch),{
+router.get('/', async(request, response)=>{
+    const serch = request.query.serch
+    const sortStr = request.query.sort
+    let sort=''
+    //관련도순
+    if(sortStr=="accuracy"){
+        sort = "accuracy"
+    }
+    //최신순
+    else if(sortStr=="recency"){
+        sort = "recency"
+    }else sort = "accuracy"
+    await axios.get(`https://dapi.kakao.com/v2/search/web?sort=${sort}&page=1&size=50&query=`+encodeURI(serch),{
         headers:{
             "Content-Type": "application/json",
             "Authorization": apikey
@@ -60,8 +70,8 @@ router.post('/', async(request, response)=>{
                 let newkeyword = await url.indexOf("news")
                 if(newkeyword >0){
                     result.push({
-                        "title" : await item[i].title.replaceAll("<b>","").replaceAll("</b>",""),
-                        "info" : await item[i].contents.replaceAll("<b>","").replaceAll("</b>",""),
+                        "title" : await item[i].title.replaceAll("<b>","").replaceAll("</b>","").replaceAll("&#39;","`"),
+                        "info" : await item[i].contents.replaceAll("<b>","").replaceAll("</b>","").replaceAll("&#39;","`"),
                         "url" : await item[i].url,
                         "date" : await item[i].datetime,
                         "imgurl" : await htmlget(url)

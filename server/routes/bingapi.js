@@ -4,11 +4,12 @@ const router = express.Router();
 const axios = require("axios")
 const apikey = "e11c1e1c0adb431d927bca96211c656c"
 
-router.post('/', async(request, response)=>{
-    const serch = request.body.serch
+
+router.get('/', async(request, response)=>{
+    const serch = request.query.serch
     const endpoint = "https://api.bing.microsoft.com/v7.0/news/search/"
 
-    await axios.get(`${endpoint}?mkt=en-US&count=50&dix=Day&sortBy=Date&q=`+encodeURI(serch),{
+    await axios.get(`${endpoint}?mkt=en-US&count=50&dix=Day&sortBy=Date&freshness=day&q=`+encodeURI(serch),{
         headers:{
             'Ocp-Apim-Subscription-Key': apikey 
         }
@@ -18,8 +19,8 @@ router.post('/', async(request, response)=>{
             const item = await res.data.value
             for(let i=0; i<item.length; i++){
                 let img = await item[i].image
-                if(img == undefined) img == null                     //기사의 이미지가 포함되지 않을 경우
-                else img = await item[i].image.thumbnail.contentUrl //기사의 이미지가 포함될 경우
+                if(img == undefined) img = null
+                else img = await item[i].image.thumbnail.contentUrl     //기사의 이미지가 포함될 경우
                 const title = await item[i].name
                 const info = await item[i].description
                 const url =await item[i].url
