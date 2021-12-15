@@ -59,9 +59,8 @@ const asyawi=async()=>{
 }
 
 export const ADD_STATE = 'ADD_STATE'
-// export let RECORD_FIND = increment();
-export let RECORD_FIND = "sad"
-export let ASYNC = asyawi().then();
+export let RECORD_FIND = increment();
+export let ASYNC = asyawi();
 
 
 
