@@ -1,32 +1,32 @@
-.Signup{
+.Signup {
     display: flex;
-    height:105vh;
-    background-color:"#DDDDDD";
-    margin:  0 auto;
+    height: 105vh;
+    background-color: '#DDDDDD';
+    margin: 0 auto;
     flex-direction: column;
     align-items: center;
     padding: 30px;
 }
 
-.SignupBox{
+.SignupBox {
     height: 85%;
     width: 70%;
-    background-color: #FFFF;
+    background-color: #ffff;
     padding: 70px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    border: 0.1px solid #BFBFBF;
+    border: 0.1px solid #bfbfbf;
     border-radius: 20px;
 }
 
-.SignupHeader{
+.SignupHeader {
     display: flex;
     justify-content: center;
     margin-bottom: 30px;
 }
 
-.input{
+.input {
     margin-bottom: 30px;
     width: 50%;
 }
@@ -35,7 +35,7 @@
 
 } */
 
-.singupButton{
+.singupButton {
     display: flex;
     width: 100%;
     justify-content: flex-end;

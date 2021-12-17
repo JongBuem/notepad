@@ -1,11 +1,10 @@
-import React, { useState, useEffect }  from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import './style.css'
-import Login from '../pages/Login';
+import Login from '../pages/Login'
 import {
     Box,
-    Toolbar, 
-    MenuItem, 
+    Toolbar,
     AppBar,
     IconButton,
     Button,
@@ -24,107 +23,101 @@ import {
     List,
     ListItem,
     ListItemText,
-    CircularProgress
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import HomeIcon from '@material-ui/icons/Home';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import CloudQueueIcon from '@material-ui/icons/CloudQueue';
-import MailIcon from '@material-ui/icons/Mail';
-import SettingsIcon from '@material-ui/icons/Settings';
-import ReportIcon from '@material-ui/icons/Report';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
-import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+    CircularProgress,
+} from '@material-ui/core'
+import MenuIcon from '@material-ui/icons/Menu'
+import SearchIcon from '@material-ui/icons/Search'
+import HomeIcon from '@material-ui/icons/Home'
+import BarChartIcon from '@material-ui/icons/BarChart'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import CloudQueueIcon from '@material-ui/icons/CloudQueue'
+import MailIcon from '@material-ui/icons/Mail'
+import SettingsIcon from '@material-ui/icons/Settings'
+import ReportIcon from '@material-ui/icons/Report'
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline'
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive'
 
-import MenuRouter from '../routers/TopMenuRouter'; 
-import { useDispatch, useSelector } from 'react-redux';
-import {loginOpen} from '../redux/loginwindow/actions'
-import {open, close} from '../redux/drawer/actions'
+import MenuRouter from '../routers/TopMenuRouter'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginOpen } from '../redux/loginwindow/actions'
+import { open, close } from '../redux/drawer/actions'
+import { addstate } from '../redux/news/actions'
 
 // style={{color:"#5E2F78", borderLeft:"1px solid red"}}
-const drawerWidth = 200;
+const drawerWidth = 200
 
 //left menu list item_1
-const Lists_1 = (props)=>{
+const Lists_1 = (props) => {
     let url
     let icon
-    if(props.index==0){
-        url="/"
-        icon = <HomeIcon style={{color:"#5E2F78"}}/>
-    }else if(props.index==1){
-        url="/news"
-        icon = <CloudQueueIcon style={{color:"#5E2F78"}}/>
-    }else if(props.index==2){
-        url="/chart"
-        icon = <BarChartIcon style={{color:"#5E2F78"}}/>
-    }else if(props.index==3){
-        url="/chart"
-        icon = <DoneOutlineIcon style={{color:"#5E2F78"}}/>
+    const dispatch = useDispatch() //login window action
+    if (props.index == 0) {
+        url = '/'
+        icon = <HomeIcon style={{ color: '#5E2F78' }} />
+    } else if (props.index == 1) {
+        url = '/news'
+        icon = <CloudQueueIcon style={{ color: '#5E2F78' }} />
+    } else if (props.index == 2) {
+        url = '/chart'
+        icon = <BarChartIcon style={{ color: '#5E2F78' }} />
+    } else if (props.index == 3) {
+        url = '/chart'
+        icon = <DoneOutlineIcon style={{ color: '#5E2F78' }} />
     }
-    return(
-        <Link to={url}>
-            <ListItem button >
+    return (
+        <Link to={url} onClick={() => dispatch(addstate())}>
+            <ListItem button>
                 {icon}
-                <ListItemText primary={props.text} style={{marginLeft:20}}/>
+                <ListItemText primary={props.text} style={{ marginLeft: 20 }} />
             </ListItem>
         </Link>
     )
 }
 
 //left menu list item_2
-const Lists_2 = (props)=>{
+const Lists_2 = (props) => {
     let url
     let icon
-    if(props.index==0){
-        url="/"
-        icon = <MailIcon style={{color:"#5E2F78"}}/>
-    }else if(props.index==1){
-        url="/"
-        icon = <MonetizationOnIcon style={{color:"#5E2F78"}}/>
-    }else if(props.index==2){
-        url="/"
-        icon = <ReportIcon style={{color:"#5E2F78"}}/>
-    }else if(props.index==3){
-        url="/"
-        icon = <SettingsIcon style={{color:"#5E2F78"}}/>
+    if (props.index == 0) {
+        url = '/'
+        icon = <MailIcon style={{ color: '#5E2F78' }} />
+    } else if (props.index == 1) {
+        url = '/'
+        icon = <MonetizationOnIcon style={{ color: '#5E2F78' }} />
+    } else if (props.index == 2) {
+        url = '/'
+        icon = <ReportIcon style={{ color: '#5E2F78' }} />
+    } else if (props.index == 3) {
+        url = '/'
+        icon = <SettingsIcon style={{ color: '#5E2F78' }} />
     }
-    return(
+    return (
         <Link to={url}>
-            <ListItem button >
+            <ListItem button>
                 {icon}
-                <ListItemText primary={props.text} style={{marginLeft:20}}/>
+                <ListItemText primary={props.text} style={{ marginLeft: 20 }} />
             </ListItem>
         </Link>
     )
 }
 
 //Drawer list
-const DrawerList = ()=>{
-    return(
+const DrawerList = () => {
+    return (
         <Box>
-            <Divider  />
+            <Divider />
             <List>
-            {['홈', '클라우드', '사용량', '결제정보'].map((text, index) => (
-                <Lists_1
-                    key={text}
-                    index={index}
-                    text ={text}
-                />    
-            ))}
+                {['홈', '클라우드', '사용량', '결제정보'].map((text, index) => (
+                    <Lists_1 key={text} index={index} text={text} />
+                ))}
             </List>
             <Divider />
             <List>
-            {['문의', '결제', '경고', '설정'].map((text, index) => (
-                <Lists_2
-                key={text}
-                index={index}
-                text ={text}
-            />  
-            ))}
+                {['문의', '결제', '경고', '설정'].map((text, index) => (
+                    <Lists_2 key={text} index={index} text={text} />
+                ))}
             </List>
         </Box>
     )
@@ -138,7 +131,7 @@ const openedMixin = (theme) => ({
         duration: theme.transitions.duration.enteringScreen,
     }),
     overflowX: 'hidden',
-});
+})
 
 //Drawer close option
 const closedMixin = (theme) => ({
@@ -151,7 +144,7 @@ const closedMixin = (theme) => ({
     // [theme.breakpoints.up('sm')]: {
     // width: 60,
     // },
-});
+})
 
 //Drawer heder option
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -161,32 +154,32 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-}));
+}))
 
 //Drawer option
-const DrawerCustom = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
-        width: 100,
-        flexShrink: 0,
-        whiteSpace: 'nowrap',
-        boxSizing: 'border-box',
-        ...(open && {
+const DrawerCustom = styled(Drawer, {
+    shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+    width: 100,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    ...(open && {
         ...openedMixin(theme),
         '& .MuiDrawer-paper': openedMixin(theme),
-        }),
-        ...(!open && {
+    }),
+    ...(!open && {
         ...closedMixin(theme),
         '& .MuiDrawer-paper': closedMixin(theme),
-        }),
     }),
-);
+}))
 
 //AppBar option
 const AppBarCustom = styled(AppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
-    })(({ theme, open }) => ({
-        zIndex: theme.zIndex.drawer + 1,
-        transition: theme.transitions.create(['width', 'margin'], {
+})(({ theme, open }) => ({
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
     }),
@@ -198,7 +191,7 @@ const AppBarCustom = styled(AppBar, {
             duration: theme.transitions.duration.enteringScreen,
         }),
     }),
-}));
+}))
 
 //Search box style option
 const Search = styled('div')(({ theme }) => ({
@@ -211,88 +204,98 @@ const Search = styled('div')(({ theme }) => ({
     },
     width: '50%',
     height: '50%',
-    alignItems:"center",
-    padding:'5px',
-    paddingLeft:'15px',
-}));
+    alignItems: 'center',
+    padding: '5px',
+    paddingLeft: '15px',
+}))
 
 //Search icon style option
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     // padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
-    right:'0px',
+    right: '0px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-}));
+}))
 
 //Search input style option
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
-    width:"80%"
-}));
-
+    width: '80%',
+}))
 
 function TopMenuComponent() {
     const dispatch = useDispatch() //login window action
-    const {drawer} = useSelector((state)=>state)
-    const {loginWindow} = useSelector((state)=>state)
-    const theme = useTheme();
-    const [age, setAge] = useState('');
+    const { drawer } = useSelector((state) => state)
+    const { loginWindow } = useSelector((state) => state)
+    const theme = useTheme()
+    const [age, setAge] = useState('')
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setAge(event.target.value)
         console.log(age)
-    };
+    }
 
     const useStyles = makeStyles({
         select: {
-            "&:after": {
-                borderBottomColor: "#ffff",
+            '&:after': {
+                borderBottomColor: '#ffff',
             },
-            "& .MuiSvgIcon-root": {
-                color: "#ffff",
+            '& .MuiSvgIcon-root': {
+                color: '#ffff',
             },
             '&:before': {
-                border:'none',
-                borderBottomColor: "#ffff",
+                border: 'none',
+                borderBottomColor: '#ffff',
             },
             '&:hover': {
-                border:'none',
-                borderBottomColor: "#ffff",
+                border: 'none',
+                borderBottomColor: '#ffff',
             },
         },
-    });
-    const classes = useStyles();
+        home: {
+            '&:hover': {
+                color: '#BFBFBF',
+                cursor: 'pointer',
+                fontFamily: 'Fjalla One',
+            },
+        },
+    })
+    const classes = useStyles()
 
-    const loginWindows = ()=>{
-        if(loginWindow.loginState == "LOGOUT"){
+    const loginWindows = () => {
+        if (loginWindow.loginState == 'LOGOUT') {
             dispatch(loginOpen())
         }
     }
-    
+
     return (
-        <Box sx={{ display:'flex', bgcolor:'text.disabled'}}>
+        <Box sx={{ display: 'flex', bgcolor: 'text.disabled' }}>
             <CssBaseline />
-            <AppBarCustom position="fixed" style={{backgroundColor:'#5E2F78'}} open={drawer.toggle}>
-                <Toolbar >
-                    <Box sx={{flexGrow:1}}>
-                    {drawer.toggle ?
-                        <div/>
-                        :
-                        <IconButton
-                            edge='start'
-                            color='inherit'
-                            aria-label='menu'
-                            sx={{mr:2}}
-                            onClick={()=>dispatch(open())}
-                        >
-                            <MenuIcon/>
-                        </IconButton>
-                    }
+            <AppBarCustom position="fixed" style={{ backgroundColor: '#5E2F78' }} open={drawer.toggle}>
+                <Toolbar>
+                    <Box style={{ display: 'flex', alignContent: 'center', justifyContent: 'center', justifyItems: 'flex-end', position: 'relative', left: -21 }}>
+                        {drawer.toggle ? (
+                            <div />
+                        ) : (
+                            <IconButton color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => dispatch(open())}>
+                                <MenuIcon />
+                            </IconButton>
+                        )}
                     </Box>
-                    <Box sx={{display:'flex',flexGrow:4, flexDirection:'row', alignContent:'center', alignItems:'center'}}>
-                        <FormControl style={{width:'200px', marginRight:'10px'}}>
+                    <Box style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+                        <Box
+                            className={classes.home}
+                            style={{
+                                fontSize: '25px',
+                                fontWeight: 600,
+                                fontFamily: 'Fjalla One',
+                            }}
+                        >
+                            News Moa
+                        </Box>
+                        {/* <FormControl style={{width:'200px', marginRight:'10px'}}>
                             <InputLabel id="demo-simple-select-label"  style={{color:'#ffff', border:"none"}}>전체</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
@@ -308,28 +311,26 @@ function TopMenuComponent() {
                                 <MenuItem value={20}>Twenty</MenuItem>
                                 <MenuItem value={30}>Thirty</MenuItem>
                             </Select>
-                        </FormControl>
-                        <Search>
-                            <SearchIconWrapper >
-                                <IconButton
-                                edge='start'
-                                color='inherit'
-                                aria-label='menu'
-                                sx={{mr:2}}
-                                >
-                                    <SearchIcon/>
-                                </IconButton>
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                    placeholder="Search…"
-                                    inputProps={{ 'aria-label': 'search' }}
-                            />
-                        </Search>
+                        </FormControl> */}
                     </Box>
-                    <Box>
+                    <Search sx={{ mr: 3 }}>
+                        <SearchIconWrapper>
+                            <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 4 }}>
+                                <SearchIcon />
+                            </IconButton>
+                        </SearchIconWrapper>
+                        <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+                    </Search>
+                    <Box sx={{ ml: 1 }}>
                         <ButtonGroup>
-                            <Button style={{border:'none'}}><Link to="/news" style={{display:"flex", color:"#ffff"}}><NotificationsActiveIcon/></Link></Button>
-                            <Button style={{border:'none'}} onClick={()=> loginWindows()}><AccountCircleIcon style={{display:"flex", color:"#ffff"}}/></Button>
+                            <Button style={{ border: 'none' }}>
+                                <Link to="/news" style={{ display: 'flex', color: '#ffff' }}>
+                                    <NotificationsActiveIcon />
+                                </Link>
+                            </Button>
+                            <Button style={{ border: 'none' }} onClick={() => loginWindows()}>
+                                <AccountCircleIcon style={{ display: 'flex', color: '#ffff' }} />
+                            </Button>
                         </ButtonGroup>
                     </Box>
                     <Login></Login>
@@ -337,20 +338,19 @@ function TopMenuComponent() {
             </AppBarCustom>
             <DrawerCustom variant="permanent" open={drawer.toggle}>
                 <DrawerHeader>
-                    <IconButton onClick={()=>dispatch(close())}>
-                            <ChevronLeftIcon />
+                    <IconButton onClick={() => dispatch(close())}>
+                        <ChevronLeftIcon />
                     </IconButton>
                 </DrawerHeader>
-                <DrawerList/>
+                <DrawerList />
             </DrawerCustom>
-            <Box component="main" sx={{ flexGrow: 1 , bgcolor:"#DDDDDD"}} style={{overflowY:"hidden", height:"100vh"}}>
+            <Box component="main" sx={{ flexGrow: 1, bgcolor: '#DDDDDD' }} style={{ overflowY: 'hidden', height: '100vh' }}>
                 <DrawerHeader />
 
-                    <MenuRouter/>
-
+                <MenuRouter />
             </Box>
         </Box>
-    );
+    )
 }
 
 export default TopMenuComponent
