@@ -54,8 +54,8 @@ export default function News() {
                             aria-label="full width tabs example"
                         >
                             <Tab label="전체 뉴스" {...a11yProps(0)} style={{ fontWeight: 600 }} />
-                            <Tab label="Google" {...a11yProps(1)} style={{ fontWeight: 600 }} />
-                            <Tab label="NAVER" {...a11yProps(2)} style={{ fontWeight: 600 }} />
+                            <Tab label="NAVER" {...a11yProps(1)} style={{ fontWeight: 600 }} />
+                            <Tab label="Google" {...a11yProps(2)} style={{ fontWeight: 600 }} />
                             <Tab label="Bing" {...a11yProps(3)} style={{ fontWeight: 600 }} />
                             <Tab label="The Guardian" {...a11yProps(4)} style={{ fontWeight: 600 }} />
                             <Tab label="kakao" {...a11yProps(5)} style={{ fontWeight: 600 }} />
@@ -63,16 +63,16 @@ export default function News() {
                         <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={value} onChangeIndex={handleChangeIndex}>
                             <TabPanel value={value} index={0} dir={theme.direction}>
                                 <NewsList props={'NAVER'} newsRecord={newsRecord} />
-                                <NewsList props={'kakao'} newsRecord={newsRecord} />
-                                <NewsList props={'Bing'} newsRecord={newsRecord} />
                                 <NewsList props={'Google'} newsRecord={newsRecord} />
+                                <NewsList props={'Bing'} newsRecord={newsRecord} />
                                 <NewsList props={'The Guardian'} newsRecord={newsRecord} />
+                                <NewsList props={'kakao'} newsRecord={newsRecord} />
                             </TabPanel>
                             <TabPanel value={value} index={1} dir={theme.direction}>
-                                <NewsList props={'Google'} newsRecord={newsRecord} />
+                                <NewsList props={'NAVER'} newsRecord={newsRecord} />
                             </TabPanel>
                             <TabPanel value={value} index={2} dir={theme.direction}>
-                                <NewsList props={'NAVER'} newsRecord={newsRecord} />
+                                <NewsList props={'Google'} newsRecord={newsRecord} />
                             </TabPanel>
                             <TabPanel value={value} index={3} dir={theme.direction}>
                                 <NewsList props={'Bing'} newsRecord={newsRecord} />

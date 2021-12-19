@@ -4,7 +4,7 @@ const router = express.Router()
 const axios = require('axios')
 const cheerio = require('cheerio')
 const iconv = require('iconv-lite')
-const apikey = '57a37458-ff72-4240-bd66-d8533d706a9f'
+const apikey = process.env.GUARDIAN_KEY
 
 const Date = async (date) => {
     let arry = date.replaceAll('-', '.')

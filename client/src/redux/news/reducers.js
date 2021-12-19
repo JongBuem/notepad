@@ -1,5 +1,5 @@
 //reducers
-import { ADD_STATE, RECORD_FIND } from './types'
+import { ADD_STATE, CLOUD, BIGDATA, BLOCKCHAIN, AI, IOT } from './types'
 import { LOGINSTATE } from '../loginwindow/types'
 import axios from 'axios'
 
@@ -35,7 +35,7 @@ import axios from 'axios'
 
 const newsAPI = (item, query, sort) => {
     // console.time()
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         axios
             .get(`http://127.0.0.1:8080/${item}/news?sort=${sort}&serch=${query}`, {
                 headers: {
@@ -47,20 +47,24 @@ const newsAPI = (item, query, sort) => {
                 serch: query,
                 sort: sort,
             })
-            .then(async (res) => {
-                if (res.data.message) {
-                    resolve(res.data.message)
+            .then((res) => {
+                if (res.data.message == false) {
+                    reject(undefined)
                 } else {
-                    console.log('false')
+                    resolve(res.data.message)
                 }
             })
             .catch((error) => {
                 console.log(error)
-                return undefined
+                reject(undefined)
             })
-    }).then((res) => {
-        return res
     })
+        .then((res) => {
+            return res
+        })
+        .catch((err) => {
+            return err
+        })
 }
 
 const recordfind = () => {
@@ -101,8 +105,8 @@ let initialState = {
     bing: newsAPI('bing', '클라우드', 'accuracy'),
     guardian: newsAPI('guardian', 'cloud', 'accuracy'),
     newscatcher: newsAPI('newscatcher', '클라우드', 'accuracy'),
-    loading: false,
     recordfind: recordfind(),
+    loading: false,
 }
 
 //recency  최신
@@ -119,6 +123,56 @@ const addViewReducer = (state = initialState, action) => {
         case ADD_STATE:
             return {
                 ...state,
+                recordfind: recordfind(),
+            }
+        case CLOUD:
+            return {
+                ...state,
+                naver: newsAPI('naver', '클라우드', 'accuracy'),
+                kakao: newsAPI('kakao', '클라우드', 'accuracy'),
+                bing: newsAPI('bing', '클라우드', 'accuracy'),
+                guardian: newsAPI('guardian', 'cloud', 'accuracy'),
+                newscatcher: newsAPI('newscatcher', '클라우드', 'accuracy'),
+                recordfind: recordfind(),
+            }
+        case BIGDATA:
+            return {
+                ...state,
+                naver: newsAPI('naver', '빅데이터', 'accuracy'),
+                kakao: newsAPI('kakao', '빅데이터', 'accuracy'),
+                bing: newsAPI('bing', '빅데이터', 'accuracy'),
+                guardian: newsAPI('guardian', 'big data', 'accuracy'),
+                newscatcher: newsAPI('newscatcher', '빅데이터', 'accuracy'),
+                recordfind: recordfind(),
+            }
+        case BLOCKCHAIN:
+            return {
+                ...state,
+                naver: newsAPI('naver', '블록체인', 'accuracy'),
+                kakao: newsAPI('kakao', '블록체인', 'accuracy'),
+                bing: newsAPI('bing', '블록체인', 'accuracy'),
+                guardian: newsAPI('guardian', 'block chain', 'accuracy'),
+                newscatcher: newsAPI('newscatcher', '블록체인', 'accuracy'),
+                recordfind: recordfind(),
+            }
+        case AI:
+            return {
+                ...state,
+                naver: newsAPI('naver', 'AI', 'accuracy'),
+                kakao: newsAPI('kakao', 'AI', 'accuracy'),
+                bing: newsAPI('bing', 'AI', 'accuracy'),
+                guardian: newsAPI('guardian', 'AI', 'accuracy'),
+                newscatcher: newsAPI('newscatcher', 'AI', 'accuracy'),
+                recordfind: recordfind(),
+            }
+        case IOT:
+            return {
+                ...state,
+                naver: newsAPI('naver', 'IOT', 'accuracy'),
+                kakao: newsAPI('kakao', 'IOT', 'accuracy'),
+                bing: newsAPI('bing', 'IOT', 'accuracy'),
+                guardian: newsAPI('guardian', 'IOT', 'accuracy'),
+                newscatcher: newsAPI('newscatcher', 'IOT', 'accuracy'),
                 recordfind: recordfind(),
             }
         default:

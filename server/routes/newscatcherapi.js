@@ -2,7 +2,7 @@
 const express = require('express')
 const router = express.Router()
 const axios = require('axios')
-const apikey = 'efOBYCVMU9p_kdortqeooz_Wr0WmkUPBXXryf4_Q5ro'
+const apikey = process.env.NEWSCHART_KEY
 
 const Date = async (date) => {
     let arry = date.replaceAll('-', '.')

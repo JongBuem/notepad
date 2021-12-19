@@ -4,8 +4,8 @@ const router = express.Router()
 const axios = require('axios')
 const cheerio = require('cheerio')
 const iconv = require('iconv-lite')
-const client_id = 'UwCtjxRJjKMup3ZE6GjQ' //naver id
-const client_secret = 'DESc47vs41' //naver secret
+const client_id = process.env.NAVER_ID
+const client_secret = process.env.NAVER_SECRET
 
 const htmlget = async (url) => {
     try {

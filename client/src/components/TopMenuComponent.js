@@ -24,6 +24,7 @@ import {
     ListItem,
     ListItemText,
     CircularProgress,
+    Backdrop,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
@@ -38,18 +39,38 @@ import ReportIcon from '@material-ui/icons/Report'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline'
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive'
-
+import StorageIcon from '@material-ui/icons/Storage'
 import MenuRouter from '../routers/TopMenuRouter'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginOpen } from '../redux/loginwindow/actions'
 import { open, close } from '../redux/drawer/actions'
 import { addstate } from '../redux/news/actions'
-
+import { keyword } from '../redux/news/actions'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import makeStyle from '@material-ui/core/styles/makeStyles'
 // style={{color:"#5E2F78", borderLeft:"1px solid red"}}
 const drawerWidth = 200
 
+const useStyles = makeStyle((theme) => ({
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    },
+}))
+
 //left menu list item_1
 const Lists_1 = (props) => {
+    const { news } = useSelector((state) => state)
+    const classes = useStyles()
+    const [open, setOpen] = React.useState(false)
+    Promise.all([news.naver]).then((values) => {
+        if (values[0] != undefined) {
+            setOpen(false)
+        }
+    })
+    const handleToggle = () => {
+        setOpen(!open)
+    }
     let url
     let icon
     const dispatch = useDispatch() //login window action
@@ -60,32 +81,43 @@ const Lists_1 = (props) => {
         url = '/news'
         icon = <CloudQueueIcon style={{ color: '#5E2F78' }} />
     } else if (props.index == 2) {
-        url = '/chart'
-        icon = <BarChartIcon style={{ color: '#5E2F78' }} />
+        url = '/news'
+        icon = <StorageIcon style={{ color: '#5E2F78' }} />
     } else if (props.index == 3) {
-        url = '/chart'
-        icon = <DoneOutlineIcon style={{ color: '#5E2F78' }} />
+        url = '/news'
+        icon = <MonetizationOnIcon style={{ color: '#5E2F78' }} />
     }
     return (
-        <Link to={url} onClick={() => dispatch(addstate())}>
+        <Link
+            to={url}
+            onClick={() => {
+                dispatch(keyword(props.index))
+                handleToggle()
+            }}
+        >
             <ListItem button>
                 {icon}
                 <ListItemText primary={props.text} style={{ marginLeft: 20 }} />
             </ListItem>
+            <Backdrop className={classes.backdrop} open={open}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </Link>
     )
 }
 
 //left menu list item_2
 const Lists_2 = (props) => {
+    const dispatch = useDispatch() //login window action
+    const { loginWindow } = useSelector((state) => state)
     let url
     let icon
     if (props.index == 0) {
         url = '/'
         icon = <MailIcon style={{ color: '#5E2F78' }} />
     } else if (props.index == 1) {
-        url = '/'
-        icon = <MonetizationOnIcon style={{ color: '#5E2F78' }} />
+        url = '/news/list'
+        icon = <FavoriteIcon style={{ color: '#5E2F78' }} />
     } else if (props.index == 2) {
         url = '/'
         icon = <ReportIcon style={{ color: '#5E2F78' }} />
@@ -94,12 +126,33 @@ const Lists_2 = (props) => {
         icon = <SettingsIcon style={{ color: '#5E2F78' }} />
     }
     return (
-        <Link to={url}>
-            <ListItem button>
-                {icon}
-                <ListItemText primary={props.text} style={{ marginLeft: 20 }} />
-            </ListItem>
-        </Link>
+        <Box>
+            {loginWindow.loginState == 'LOGIN' ? (
+                <Link
+                    to={url}
+                    onClick={() => {
+                        dispatch(addstate())
+                    }}
+                >
+                    <ListItem button>
+                        {icon}
+                        <ListItemText primary={props.text} style={{ marginLeft: 20 }} />
+                    </ListItem>
+                </Link>
+            ) : (
+                <Box
+                    onClick={() => {
+                        dispatch(loginOpen())
+                        dispatch(addstate())
+                    }}
+                >
+                    <ListItem button>
+                        {icon}
+                        <ListItemText primary={props.text} style={{ marginLeft: 20 }} />
+                    </ListItem>
+                </Box>
+            )}
+        </Box>
     )
 }
 
@@ -109,13 +162,13 @@ const DrawerList = () => {
         <Box>
             <Divider />
             <List>
-                {['홈', '클라우드', '사용량', '결제정보'].map((text, index) => (
+                {['홈', '클라우드', '빅 데이터', '블록체인'].map((text, index) => (
                     <Lists_1 key={text} index={index} text={text} />
                 ))}
             </List>
             <Divider />
             <List>
-                {['문의', '결제', '경고', '설정'].map((text, index) => (
+                {['문의', '좋아요', '경고', '설정'].map((text, index) => (
                     <Lists_2 key={text} index={index} text={text} />
                 ))}
             </List>
@@ -267,6 +320,10 @@ function TopMenuComponent() {
     const loginWindows = () => {
         if (loginWindow.loginState == 'LOGOUT') {
             dispatch(loginOpen())
+        } else if (loginWindow.loginState == 'LOGIN') {
+            window.localStorage.removeItem('email')
+            window.sessionStorage.removeItem('email')
+            window.location.reload()
         }
     }
 
@@ -328,8 +385,9 @@ function TopMenuComponent() {
                                     <NotificationsActiveIcon />
                                 </Link>
                             </Button>
-                            <Button style={{ border: 'none' }} onClick={() => loginWindows()}>
-                                <AccountCircleIcon style={{ display: 'flex', color: '#ffff' }} />
+                            <Button variant="outlined" style={{ color: '#Fff', border: '#ffff' }} onClick={() => loginWindows()}>
+                                {/* <AccountCircleIcon style={{ display: 'flex', color: '#ffff' }} /> */}
+                                {loginWindow.loginState == 'LOGOUT' ? 'Login' : 'Logout'}
                             </Button>
                         </ButtonGroup>
                     </Box>

@@ -329,28 +329,40 @@ export default function NewsList({ props, newsRecord }) {
 
     if (props == 'NAVER') {
         Promise.all([news.naver]).then((values) => {
-            setArticle(values[0])
-            setState(true)
+            if (values[0] != undefined) {
+                setArticle(values[0])
+                setState(true)
+            }
         })
     } else if (props == 'kakao') {
         Promise.all([news.kakao]).then((values) => {
-            setArticle(values[0])
-            setState(true)
+            if (values[0] != undefined) {
+                setArticle(values[0])
+                setState(true)
+            }
         })
     } else if (props == 'Bing') {
         Promise.all([news.bing]).then((values) => {
-            setArticle(values[0])
-            setState(false)
+            if (values[0] != undefined) {
+                if (values[0] != undefined) {
+                    setArticle(values[0])
+                    setState(true)
+                }
+            }
         })
     } else if (props == 'The Guardian') {
         Promise.all([news.guardian]).then((values) => {
-            setArticle(values[0])
-            setState(true)
+            if (values[0] != undefined) {
+                setArticle(values[0])
+                setState(true)
+            }
         })
     } else if (props == 'Google') {
         Promise.all([news.newscatcher]).then((values) => {
-            setArticle(values[0])
-            setState(true)
+            if (values[0] != undefined) {
+                setArticle(values[0])
+                setState(true)
+            }
         })
     }
     {

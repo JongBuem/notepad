@@ -8,6 +8,8 @@
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@material/top-app-bar": "^13.0.0",
     "@mui/icons-material": "^5.2.0",
+    "@mui/x-data-grid": "^5.2.0",
+    "@mui/x-data-grid-generator": "^5.2.0",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",

@@ -2,12 +2,11 @@
 const express = require('express')
 const router = express.Router()
 const axios = require('axios')
-const apikey = 'e11c1e1c0adb431d927bca96211c656c'
+const apikey = process.env.BING_KEY
+const endpoint = process.env.BING_END_POINT
 
 router.get('/', async (request, response) => {
     const serch = request.query.serch
-    const endpoint = 'https://api.bing.microsoft.com/v7.0/news/search/'
-
     await axios
         .get(`${endpoint}?mkt=en-US&count=50&dix=Day&sortBy=Date&freshness=day&q=` + encodeURI(serch), {
             headers: {
@@ -18,7 +17,6 @@ router.get('/', async (request, response) => {
             if (res.data) {
                 let result = []
                 const item = await res.data.value
-                console.log(item)
                 for (let i = 0; i < item.length; i++) {
                     let img = await item[i].image
                     if (img == undefined) img = null
@@ -43,8 +41,8 @@ router.get('/', async (request, response) => {
             }
         })
         .catch((error) => {
-            console.log(error)
-            response.json({ message: error })
+            // console.log(error)
+            response.json({ message: false })
             console.log('bing Get API error')
         })
 })

@@ -110,4 +110,9 @@ const recordfind = () => {
 }
 
 export const ADD_STATE = 'ADD_STATE'
+export const CLOUD = 'CLOUD'
+export const BIGDATA = 'BIGDATA'
+export const BLOCKCHAIN = 'BLOCKCHAIN'
+export const AI = 'AI'
+export const IOT = 'IOT'
 export let RECORD_FIND = recordfind()

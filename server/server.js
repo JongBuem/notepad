@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const bodyparser = require('body-parser')
 const cors = require('cors')
+require('dotenv').config()
 
 const corsOption = {
     origin: true,
