@@ -2,11 +2,23 @@
 const express = require('express')
 const router = express.Router()
 const { MongoClient } = require('mongodb')
+var crypto = require('crypto')
 const uri = process.env.DB_URL
 const mongoClient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 const dbName = 'user'
 const collectionName = 'info'
 
+var decrypt = (password) => {
+    // //password 암호-복호화
+    const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY.repeat(2)
+    const passwordParts = password.split(':')
+    const iv = Buffer.from(passwordParts.shift(), 'hex')
+    const encryptedpassword = Buffer.from(passwordParts.join(':'), 'hex')
+    const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY), iv)
+    const decrypted = decipher.update(encryptedpassword)
+
+    return Buffer.concat([decrypted, decipher.final()]).toString()
+}
 const connect_mongodb = (userEmail, userPassword, res) => {
     ;(async () => {
         await mongoClient.connect() //mongo Database 연결
@@ -20,7 +32,7 @@ const connect_mongodb = (userEmail, userPassword, res) => {
                 const email = await documents[0].email //검색된 email
                 const password = await documents[0].password //검색된 password
                 //입력값과 검색값이 같은지 확인
-                if (email == userEmail && password == userPassword) {
+                if (email == userEmail && decrypt(password) == userPassword) {
                     res.json({ message: true })
                 } else {
                     res.json({ message: '비밀번호다름' })

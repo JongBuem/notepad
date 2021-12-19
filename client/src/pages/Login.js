@@ -84,7 +84,7 @@ export default function Login() {
                             dispatch(loginClose())
                             window.location.reload()
                         } else if (values.autoLogin == true) {
-                            window.localStorage.setItem('email', values.email) //세션 스토리지 생성 -> 창닫으면 제거
+                            window.localStorage.setItem('email', values.email) //로컬 스토리지 생성 -> 창닫으면 제거
                             setValues({ ...values, alertState: 4 })
                             dispatch(login())
                             dispatch(loginClose())

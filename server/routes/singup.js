@@ -2,10 +2,21 @@
 const express = require('express')
 const router = express.Router()
 const { MongoClient } = require('mongodb')
+const crypto = require('crypto')
 const uri = process.env.DB_URL
 const mongoClient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 const dbName = 'user'
 const collectionName = 'info'
+
+function encrypt(password) {
+    const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY.repeat(2)
+    const IV_LENGTH = 16 // For AES, this is always 16
+    const iv = crypto.randomBytes(IV_LENGTH)
+    const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY), iv)
+    const encrypted = cipher.update(password)
+
+    return iv.toString('hex') + ':' + Buffer.concat([encrypted, cipher.final()]).toString('hex')
+}
 
 const connect_mongodb = (userName, userEmail, userPassword, userNewskeywords, res) => {
     ;(async () => {
@@ -37,7 +48,8 @@ router.post('/', (req, res) => {
     const userEmail = req.body.email //사용자 이메일
     const userPassword = req.body.password //사용자 비밀번호
     const userNewskeywords = req.body.newskeywords //뉴스 키워드
-    connect_mongodb(userName, userEmail, userPassword, userNewskeywords, res)
+    const passwordEncryptResult = encrypt(userPassword) //password 암호화
+    connect_mongodb(userName, userEmail, passwordEncryptResult, userNewskeywords, res)
 })
 
 // 라우터를 모듈화

@@ -6,10 +6,12 @@ import Chart from '../pages/Chart'
 import Singup from '../pages/Singup'
 import News from '../pages/News'
 import Heart from '../pages/Heart'
+import Main from '../pages/Main'
 export default function MenuRouter() {
     return (
         <Routes>
-            <Route path="/" element={<Home text="Home" />} />
+            <Route path="/" element={<Main />} />
+            <Route path="/main" element={<Home text="Home" />} />
             <Route path="/chart" element={<Chart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/singup" element={<Singup />} />

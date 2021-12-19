@@ -5,6 +5,8 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import './singup.css'
 import axios from 'axios'
+import { login } from '../redux/loginwindow/actions'
+import { useSelector, useDispatch, connect } from 'react-redux'
 
 // { title: '클라우드', en:'Cloud'},
 // { title: '빅 데이터', en: "Big Data" },
@@ -14,6 +16,7 @@ import axios from 'axios'
 const option = ['클라우드', '빅 데이터', '블록체인', '인공지능', '사물 인터넷']
 
 export default function Singup() {
+    const dispatch = useDispatch() //로그인 리듀서
     const [optionValue, setOptionValue] = useState(option[0])
     const [values, setValues] = useState({
         name: '',
@@ -61,6 +64,9 @@ export default function Singup() {
                 .then((res) => {
                     if (res.data.message == true) {
                         setValues({ ...values, alertState: 4 })
+                        window.sessionStorage.setItem('email', values.email) //세션 스토리지 생성 -> 창닫으면 제거
+                        dispatch(login())
+                        window.location.href = 'http://localhost:3000/'
                     } else {
                         setValues({ ...values, alertState: 3 })
                     }
@@ -77,10 +83,11 @@ export default function Singup() {
                 <Typography className="SignupHeader" variant="h4" component="div">
                     회원 가입
                 </Typography>
-                <TextField label="이름" value={values.name} onChange={handleChange('name')} className="input" />
-                <TextField label="이메일" value={values.email} onChange={handleChange('email')} className="input" />
+                <TextField label="이름" value={values.name} onChange={handleChange('name')} className="input" variant="outlined" />
+                <TextField label="이메일" value={values.email} onChange={handleChange('email')} className="input" variant="outlined" />
                 <TextField
                     label="비밀번호"
+                    variant="outlined"
                     type={values.showPassword ? 'text' : 'password'}
                     value={values.password}
                     onChange={handleChange('password')}
@@ -100,6 +107,7 @@ export default function Singup() {
                 />
                 <TextField
                     label="비밀번호 확인"
+                    variant="outlined"
                     type={values.showPasswordConfirm ? 'text' : 'password'}
                     value={values.passwordConfirm}
                     onChange={handleChange('passwordConfirm')}
@@ -126,12 +134,12 @@ export default function Singup() {
                     onInputChange={(event, newInputValue) => {
                         setValues({ ...values, newskeywords: newInputValue })
                     }}
-                    id="controllable-states-demo"
+                    id="combo-box-demo"
                     options={option}
                     className="input"
-                    renderInput={(params) => <TextField {...params} label="뉴스 키워드" margin="normal" />}
+                    renderInput={(params) => <TextField variant="outlined" {...params} label="뉴스 키워드" margin="normal" />}
                 />
-                <Box className="alertBox">
+                <Box className="alertBox" style={{ width: '100%' }}>
                     {values.alertState == 1 ? (
                         <Alert
                             variant="filled"

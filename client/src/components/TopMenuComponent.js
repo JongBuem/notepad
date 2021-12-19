@@ -342,16 +342,26 @@ function TopMenuComponent() {
                         )}
                     </Box>
                     <Box style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-                        <Box
-                            className={classes.home}
+                        <Link
+                            to="/"
                             style={{
+                                color: '#FFFF',
                                 fontSize: '25px',
                                 fontWeight: 600,
                                 fontFamily: 'Fjalla One',
                             }}
                         >
-                            News Moa
-                        </Box>
+                            <Box
+                                className={classes.home}
+                                style={{
+                                    fontSize: '25px',
+                                    fontWeight: 600,
+                                    fontFamily: 'Fjalla One',
+                                }}
+                            >
+                                News Moa
+                            </Box>
+                        </Link>
                         {/* <FormControl style={{width:'200px', marginRight:'10px'}}>
                             <InputLabel id="demo-simple-select-label"  style={{color:'#ffff', border:"none"}}>전체</InputLabel>
                             <Select
