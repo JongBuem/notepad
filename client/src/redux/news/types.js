@@ -9,10 +9,10 @@ import axios from 'axios'
 //         const sort = 'recency'
 //         const query = '클라우드'
 //         axios
-//             .get(`http://127.0.0.1:8080/${item}/news?sort=${sort}&serch=${query}`, {
+//             .get(`http://20.194.16.65:8080/${item}/news?sort=${sort}&serch=${query}`, {
 //                 headers: {
 //                     'Access-Control-Allow-Credentials': true,
-//                     'Access-Control-Allow-Origin': 'http://127.0.0.1:8080',
+//                     'Access-Control-Allow-Origin': 'http://20.194.16.65:8080',
 //                     'Content-Type': 'application/json',
 //                     Accept: 'application/json',
 //                 },
@@ -41,10 +41,10 @@ import axios from 'axios'
 //     const sort = 'recency'
 //     const query = '클라우드'
 //     const response = await axios
-//         .get(`http://127.0.0.1:8080/${item}/news?sort=${sort}&serch=${query}`, {
+//         .get(`http://20.194.16.65:8080/${item}/news?sort=${sort}&serch=${query}`, {
 //             headers: {
 //                 'Access-Control-Allow-Credentials': true,
-//                 'Access-Control-Allow-Origin': 'http://127.0.0.1:8080',
+//                 'Access-Control-Allow-Origin': 'http://20.194.16.65:8080',
 //                 'Content-Type': 'application/json',
 //                 Accept: 'application/json',
 //             },
@@ -83,10 +83,10 @@ const recordfind = () => {
     return new Promise((resolve) => {
         if (LOGINSTATE == 'LOGIN') {
             axios
-                .post('http://127.0.0.1:8080/news/record/find', {
+                .post('http://20.194.16.65:8080/news/record/find', {
                     headers: {
                         'Access-Control-Allow-Credentials': true,
-                        'Access-Control-Allow-Origin': 'http://127.0.0.1:8080',
+                        'Access-Control-Allow-Origin': 'http://20.194.16.65:8080',
                         'Content-Type': 'application/json',
                         Accept: 'application/json',
                     },

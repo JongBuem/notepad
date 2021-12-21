@@ -65,10 +65,10 @@ export default function Login() {
             setValues({ ...values, alertState: 1 })
         } else {
             await axios
-                .post('http://127.0.0.1:8080/login', {
+                .post('http://20.194.16.65:8080/login', {
                     headers: {
                         'Access-Control-Allow-Credentials': true,
-                        'Access-Control-Allow-Origin': 'http://127.0.0.1:8080',
+                        'Access-Control-Allow-Origin': 'http://20.194.16.65:8080',
                         'Content-Type': 'application/json',
                         Accept: 'application/json',
                     },
